@@ -21,8 +21,8 @@ int main(){
 	result[1] = *(output+1);
 	result[2] = *(output+2);
 
-
-	for(int i=0; i<3; i++){
+    int i;
+	for(i=0; i<3; i++){
 		printf("%f\n",result[i]);
 	}
 

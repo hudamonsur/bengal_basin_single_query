@@ -41,7 +41,7 @@ float * getdepth(float north_m, float east_m, float depth_m)
 	float diflat = inputlat-minlat;
 	float diflong = inputlong-minlong;
 
-	fp=fopen("/Users/monsurul/Documents/uofm/Desktop/qualifying_phd/velocity model/depth.bin","rb");
+	fp=fopen("depth.bin","rb");
 	if (!fp)
 	{
 		printf("Unable to open file!");
