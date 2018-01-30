@@ -9,11 +9,12 @@
 float * getmantlevalues(float depth_m, float mindepth);
 float * getcrustvalues(float depth_m, float mindepth);
 float * getbasinvalues(float depth_m, float maxdepth);
+float * getsurfacedepth(float );
 
 float * getdepth(float north_m, float east_m, float depth_m)
 {
 	float result[3];
-	FILE *fp=NULL;
+	FILE *fp1=NULL;
 	float minlat= 19.9;
 	float maxlat= 27;
 	float minlong= 86.5;
@@ -41,8 +42,8 @@ float * getdepth(float north_m, float east_m, float depth_m)
 	float diflat = inputlat-minlat;
 	float diflong = inputlong-minlong;
 
-	fp=fopen("depth.bin","rb");
-	if (!fp)
+	fp1=fopen("depth.bin","rb");
+	if (!fp1)
 	{
 		printf("Unable to open file!");
 		return 0;
@@ -60,26 +61,26 @@ float * getdepth(float north_m, float east_m, float depth_m)
 
 		if (intervalnumberlatitude==0 && intervalnumberlongitude==0){
 			byteval1 = intervalnumberlongitude*4 + 4;
-			fseek(fp, byteval1, SEEK_SET);
-			fread(&value, 4, 1, fp);
+			fseek(fp1, byteval1, SEEK_SET);
+			fread(&value, 4, 1, fp1);
 		}
 
 		else if (intervalnumberlatitude==0){
 			byteval1 = intervalnumberlongitude*4;
-			fseek(fp, byteval1, SEEK_SET);
-			fread(&value, 4, 1, fp);
+			fseek(fp1, byteval1, SEEK_SET);
+			fread(&value, 4, 1, fp1);
 		}
 
 		else if(intervalnumberlongitude==0){
 			byteval1 = intervalnumberlatitude*8000 + 4;
-			fseek(fp, byteval1, SEEK_SET);
-			fread(&value, 4, 1, fp);
+			fseek(fp1, byteval1, SEEK_SET);
+			fread(&value, 4, 1, fp1);
 		}
 
 		else if(intervalnumberlatitude==2000 || intervalnumberlongitude==2000){
 			byteval1 = intervalnumberlatitude*8000 + intervalnumberlongitude*4;
-			fseek(fp, byteval1, SEEK_SET);
-			fread(&value, 4, 1, fp);
+			fseek(fp1, byteval1, SEEK_SET);
+			fread(&value, 4, 1, fp1);
 		}
 
 		else {
@@ -93,14 +94,14 @@ float * getdepth(float north_m, float east_m, float depth_m)
 			float long2 = long1 - dlong;
 
 			/* seeking values */
-			fseek(fp, byteval1, SEEK_SET);
-			fread(&val1, 4, 1, fp);
-			fseek(fp, byteval2, SEEK_SET);
-			fread(&val2, 4, 1, fp);
-			fseek(fp, byteval3, SEEK_SET);
-			fread(&val3, 4, 1, fp);
-			fseek(fp, byteval4, SEEK_SET);
-			fread(&val4, 4, 1, fp);
+			fseek(fp1, byteval1, SEEK_SET);
+			fread(&val1, 4, 1, fp1);
+			fseek(fp1, byteval2, SEEK_SET);
+			fread(&val2, 4, 1, fp1);
+			fseek(fp1, byteval3, SEEK_SET);
+			fread(&val3, 4, 1, fp1);
+			fseek(fp1, byteval4, SEEK_SET);
+			fread(&val4, 4, 1, fp1);
 
 
 			float R1 = ((long2-east_m)/(long2-long1))*val1 + ((east_m-long1)/(long2-long1))*val2;
@@ -110,7 +111,7 @@ float * getdepth(float north_m, float east_m, float depth_m)
 		}
 
 	}
-	fclose(fp);
+	fclose(fp1);
 
 
 	/*fseek(fp, 11576002, SEEK_SET);
@@ -144,6 +145,15 @@ float * getdepth(float north_m, float east_m, float depth_m)
 	fclose(output);
 	//printf("%f",value);
 	//free(fp);
+
+}
+
+float * getsurfacedepth(){
+
+
+
+
+
 
 }
 
